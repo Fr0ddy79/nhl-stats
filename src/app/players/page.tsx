@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { searchPlayers } from "@/lib/nhl-api";
 
 interface SearchResult {
   playerId: number;
@@ -23,22 +24,7 @@ export default function PlayersPage() {
     setError(null);
     setSearched(true);
     try {
-      const res = await fetch(
-        `https://statsapi.web.nhl.com/api/v1/people/search?names=${encodeURIComponent(query.trim())}`,
-        { headers: { "User-Agent": "nhl-stats/1.0" } }
-      );
-      if (!res.ok) throw new Error(`API error ${res.status}`);
-      const data = await res.json();
-      const players: SearchResult[] = (data.people ?? []).map((p: {
-        id: number;
-        fullName: string;
-        primaryPosition: { abbreviation: string; name: string };
-      }) => ({
-        playerId: p.id,
-        fullName: p.fullName,
-        positionCode: p.primaryPosition.abbreviation,
-        positionName: p.primaryPosition.name,
-      }));
+      const players = await searchPlayers(query.trim());
       setResults(players.length > 0 ? players : []);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Search failed");
