@@ -18,12 +18,19 @@ export default async function HomePage() {
   return (
     <main style={{ padding: "2rem", fontFamily: "system-ui, sans-serif", maxWidth: "1100px", margin: "0 auto" }}>
       <header style={{ marginBottom: "2rem", borderBottom: "1px solid #eee", paddingBottom: "1rem" }}>
-        <h1 style={{ fontSize: "1.75rem", fontWeight: 800, margin: 0 }}>
-          NHL Stats
-        </h1>
-        <p style={{ color: "#666", margin: "0.25rem 0 0", fontSize: "0.875rem" }}>
-          Live schedule, standings &amp; team data &mdash; Powered by NHL official API
-        </p>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem" }}>
+          <div>
+            <h1 style={{ fontSize: "1.75rem", fontWeight: 800, margin: 0 }}>
+              NHL Stats
+            </h1>
+            <p style={{ color: "#666", margin: "0.25rem 0 0", fontSize: "0.875rem" }}>
+              Live schedule, standings &amp; team data &mdash; Powered by NHL official API
+            </p>
+          </div>
+          <nav style={{ display: "flex", gap: "1rem", fontSize: "0.875rem" }}>
+            <a href="/players" style={{ color: "#0066cc", textDecoration: "none", fontWeight: 600 }}>Players</a>
+          </nav>
+        </div>
       </header>
 
       {/* ── Today&apos;s Games ── */}

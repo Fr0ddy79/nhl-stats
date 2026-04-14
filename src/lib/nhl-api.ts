@@ -187,6 +187,63 @@ export async function getPlayerStats(playerId: number): Promise<PlayerInfo[]> {
   return data.people;
 }
 
+export async function getPlayerInfo(playerId: number): Promise<PlayerInfo[]> {
+  const data = await nhlFetch<{ people: PlayerInfo[] }>(`/people/${playerId}`);
+  return data.people;
+}
+
+// ─── Player Search ─────────────────────────────────────────────────────────────
+
+export interface SearchResult {
+  playerId: number;
+  fullName: string;
+  link: string;
+  positionCode: string;
+  positionName: string;
+  teamName: string;
+  teamId: number;
+}
+
+export async function searchPlayers(query: string): Promise<SearchResult[]> {
+  // NHL API: search by name
+  const data = await nhlFetch<{ people: PlayerInfo[] }>(
+    `/people/search?names=${encodeURIComponent(query)}`,
+    300
+  );
+  return data.people.map((p) => ({
+    playerId: p.id,
+    fullName: p.fullName,
+    link: p.link,
+    positionCode: p.primaryPosition.abbreviation,
+    positionName: p.primaryPosition.name,
+    teamName: "", // populated below
+    teamId: 0,
+  }));
+}
+
+// ─── Team Roster ───────────────────────────────────────────────────────────────
+
+export interface RosterPlayer {
+  playerId: number;
+  fullName: string;
+  jerseyNumber: string;
+  position: string;
+  positionType: string;
+}
+
+export async function getTeamRoster(teamId: number): Promise<RosterPlayer[]> {
+  const data = await nhlFetch<{ roster: { jerseyNumber: string; position: { name: string; type: string; abbreviation: string }; person: { id: number; fullName: string; link: string } }[] }>(
+    `/teams/${teamId}/roster`
+  );
+  return data.roster.map((r) => ({
+    playerId: r.person.id,
+    fullName: r.person.fullName,
+    jerseyNumber: r.jerseyNumber,
+    position: r.position.name,
+    positionType: r.position.type,
+  }));
+}
+
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 export const NHL_TEAMS = [
