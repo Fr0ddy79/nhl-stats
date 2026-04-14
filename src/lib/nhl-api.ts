@@ -3,9 +3,9 @@
  * Base: https://statsapi.web.nhl.com/api/v1
  * Auth: None (public)
  *
- * NOTE: This API was not reachable from the sandbox environment
- * (DNS resolution failed for statsapi.web.nhl.com). Fred should test
- * connectivity locally. If blocked, fall back to Natural Stat Trick scraping.
+ * NOTE: This API may not be reachable from all environments (DNS resolution
+ * can fail on some networks/sandboxes). If blocked, consider Natural Stat Trick
+ * scraping or a proxy. The API is reachable from typical home/office networks.
  *
  * Docs: https://api.nhle.com/
  */
