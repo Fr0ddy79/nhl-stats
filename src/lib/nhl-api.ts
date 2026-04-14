@@ -1,6 +1,6 @@
 /**
  * NHL Stats API Client
- * Base: https://statsapi.web.nhl.com/api/v1
+ * Base: https://api-web.nhle.com
  * Auth: None (public)
  *
  * NOTE: This API may not be reachable from all environments (DNS resolution
@@ -10,7 +10,7 @@
  * Docs: https://api.nhle.com/
  */
 
-const BASE_URL = "https://statsapi.web.nhl.com/api/v1";
+const BASE_URL = "https://api-web.nhle.com";
 
 async function nhlFetch<T>(path: string, revalidate = 60): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
