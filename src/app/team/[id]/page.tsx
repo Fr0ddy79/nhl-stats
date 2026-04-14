@@ -101,6 +101,27 @@ export default async function TeamPage({ params }: PageProps) {
         )}
       </section>
 
+      {/* Roster CTA */}
+      <section style={{ marginBottom: "2rem" }}>
+        <a
+          href={`/team/${teamId}/roster`}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            padding: "0.625rem 1.25rem",
+            background: "#0066cc",
+            color: "#fff",
+            borderRadius: "8px",
+            textDecoration: "none",
+            fontWeight: 700,
+            fontSize: "0.875rem",
+          }}
+        >
+          View Full Roster →
+        </a>
+      </section>
+
       {/* Team Info */}
       <section>
         <h2 style={{ fontSize: "1rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "#444", marginBottom: "1rem" }}>

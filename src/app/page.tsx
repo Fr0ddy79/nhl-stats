@@ -29,6 +29,7 @@ export default async function HomePage() {
           </div>
           <nav style={{ display: "flex", gap: "1rem", fontSize: "0.875rem" }}>
             <a href="/players" style={{ color: "#0066cc", textDecoration: "none", fontWeight: 600 }}>Players</a>
+            <a href="/standings" style={{ color: "#0066cc", textDecoration: "none", fontWeight: 600 }}>Standings</a>
           </nav>
         </div>
       </header>
