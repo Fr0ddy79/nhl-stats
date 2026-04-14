@@ -39,6 +39,7 @@ export default async function HomePage() {
               const away = game.teams.away;
               const home = game.teams.home;
               const state = game.status.abstractGameState;
+              const isPre = state === "Preview";
               return (
                 <div
                   key={game.gamePk}
@@ -55,15 +56,23 @@ export default async function HomePage() {
                 >
                   {/* Away Team */}
                   <div style={{ textAlign: "right" }}>
-                    <span style={{ fontWeight: 700, fontSize: "1rem" }}>{away.team.abbreviation}</span>
+                    <a href={`/team/${away.team.id}`} style={{ fontWeight: 700, fontSize: "1rem", color: "#111", textDecoration: "none" }}>{away.team.abbreviation}</a>
                     <div style={{ color: "#666", fontSize: "0.8rem" }}>{away.team.locationName}</div>
                   </div>
 
-                  {/* Score */}
+                  {/* Score / VS */}
                   <div style={{ textAlign: "center" }}>
-                    <span style={{ fontWeight: 800, fontSize: "1.5rem" }}>{away.score}</span>
-                    <span style={{ color: "#ccc", margin: "0 0.5rem" }}>@</span>
-                    <span style={{ fontWeight: 800, fontSize: "1.5rem" }}>{home.score}</span>
+                    {isPre ? (
+                      <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#888", padding: "0.25rem 0.75rem", border: "1px solid #ddd", borderRadius: "4px" }}>
+                        {new Date(game.gameDate).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZoneName: "short" })}
+                      </div>
+                    ) : (
+                      <>
+                        <span style={{ fontWeight: 800, fontSize: "1.5rem" }}>{away.score}</span>
+                        <span style={{ color: "#ccc", margin: "0 0.5rem" }}>@</span>
+                        <span style={{ fontWeight: 800, fontSize: "1.5rem" }}>{home.score}</span>
+                      </>
+                    )}
                     <div style={{ fontSize: "0.7rem", color: "#888", marginTop: "0.125rem" }}>
                       {state === "Final" ? "FINAL" : state === "Live" ? "LIVE" : game.status.detailedState}
                     </div>
@@ -71,7 +80,7 @@ export default async function HomePage() {
 
                   {/* Home Team */}
                   <div style={{ textAlign: "left" }}>
-                    <span style={{ fontWeight: 700, fontSize: "1rem" }}>{home.team.abbreviation}</span>
+                    <a href={`/team/${home.team.id}`} style={{ fontWeight: 700, fontSize: "1rem", color: "#111", textDecoration: "none" }}>{home.team.abbreviation}</a>
                     <div style={{ color: "#666", fontSize: "0.8rem" }}>{home.team.locationName}</div>
                   </div>
                 </div>
@@ -102,7 +111,9 @@ export default async function HomePage() {
                 return (
                   <tr key={rec.team.id} style={{ background: i % 2 === 0 ? "#fff" : "#fafafa" }}>
                     <td style={{ padding: "0.4rem 0.75rem", textAlign: "center", color: "#aaa", fontSize: "0.7rem" }}>{i + 1}</td>
-                    <td style={{ padding: "0.4rem 0.75rem", fontWeight: 600, whiteSpace: "nowrap" }}>{rec.team.name}</td>
+                    <td style={{ padding: "0.4rem 0.75rem", fontWeight: 600, whiteSpace: "nowrap" }}>
+                      <a href={`/team/${rec.team.id}`} style={{ color: "#111", textDecoration: "none" }}>{rec.team.name}</a>
+                    </td>
                     <td style={{ padding: "0.4rem 0.75rem", textAlign: "center" }}>{rec.gamesPlayed}</td>
                     <td style={{ padding: "0.4rem 0.75rem", textAlign: "center", fontWeight: 600 }}>{rec.wins}</td>
                     <td style={{ padding: "0.4rem 0.75rem", textAlign: "center" }}>{rec.losses}</td>
